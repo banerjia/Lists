@@ -31,5 +31,6 @@ class CreateVideos < ActiveRecord::Migration
 
     add_index :videos, :site_id
     add_index :videos, :rating
+    add_index :videos, :active
   end
 end

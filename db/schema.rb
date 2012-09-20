@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120919172316) do
     t.datetime "updated_at",                                     :null => false
   end
 
+  add_index "videos", ["active"], :name => "index_videos_on_active"
   add_index "videos", ["rating"], :name => "index_videos_on_rating"
   add_index "videos", ["site_id"], :name => "index_videos_on_site_id"
 
