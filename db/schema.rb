@@ -15,11 +15,13 @@ ActiveRecord::Schema.define(:version => 20120919172316) do
 
   create_table "sites", :force => true do |t|
     t.string   "title",        :limit => 300,                :null => false
-    t.string   "base_url",     :limit => 250,                :null => false
+    t.string   "domain",       :limit => 250,                :null => false
     t.integer  "videos_count", :limit => 2,   :default => 0, :null => false
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
   end
+
+  add_index "sites", ["videos_count"], :name => "index_sites_on_videos_count"
 
   create_table "tags", :id => false, :force => true do |t|
     t.string   "tag",        :default => "porn", :null => false

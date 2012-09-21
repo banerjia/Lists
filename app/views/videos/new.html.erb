@@ -1,1 +1,40 @@
-Form for new
+<h1 id="create_a_new_entry">Create A New Entry</h1>
+<%= form_for @new_video do |f| -%>
+	<div class="row">
+		<div class="label">
+			<%= f.label :title, "Title" %>
+		</div>
+		<div class="field">
+			<%= f.text_field :title, :size => nil, :maxlength => 250 %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="label">
+			<%= f.label :description, "Description" %>
+		</div>
+		<div class="field">
+			<%= f.text_area :description %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="label">
+			<%= f.label :url, "Video URL" %>
+		</div>
+		<div class="field">
+			<%= f.text_field :url, :size => nil, :maxlength => 255 %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="label">
+			<%= f.label :image_url, "Image Url" %>	
+		</div>
+		<div class="field">
+			<%= f.text_field :image_url, :size => nil %>
+		</div>
+	</div>
+	<div class="row">
+		<%= f.check_box :active %>
+		<%= f.label :active, "Active" %>
+	</div>
+	<%= f.submit "Save", :disable_with => 'Saveing...' %>
+<% end -%>
