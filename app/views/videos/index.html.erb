@@ -10,3 +10,7 @@
 		</li>
 	<% end -%>
 </ul>
+<%= content_for :javascript do -%>
+	<%= javascript_include_tag :jquery -%>
+	<%= javascript_include_tag :jquery_ujs -%>
+<%- end -%>
