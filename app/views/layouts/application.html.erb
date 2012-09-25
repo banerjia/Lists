@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lists</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= csrf_meta_tags %>
+  <title><%= @browser_title.nil? && @page_title.nil? ? "Lists": @browser_title || @page_title -%></title>
+  <%= javascript_include_tag "application" -%>
+  <%= stylesheet_link_tag    "application", :media => "all" -%>
+  <%= csrf_meta_tags -%>
+  <%= yield :head -%>
 </head>
 <body>
-
-<%= yield %>
-
+	<%- if !@page_title.nil? -%>
+	<h1><%= @page_title -%></h1>
+	<%- end -%>
+	<%- if !flash[:notice].nil? -%>
+	<p class="notice"><%= flash[:notice] -%></p>
+	<%- end -%>
+	<%- if !flash[:warning].nil? -%>
+	<p class="warning"><%= flash[:warning] -%></p>
+	<%- end -%>
+	<%= yield :body -%>
+	<%= yield :javascript -%>
 </body>
 </html>

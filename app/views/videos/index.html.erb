@@ -1,6 +1,12 @@
-<h1>Videos#index</h1>
+<%= link_to "New Entry", new_video_path -%>
+<h2>Recently Added</h2>
 <ul>
 	<% @recently_added.each do |video| -%>
-		<li><%= video[:title] -%></li>
+		<li>
+			<%= video[:title] -%>
+			<br/>
+			<%= link_to "Edit", edit_video_path( video ) %> | 
+			<%= link_to "Delete", video, :confirm => "Are you sure?", :method => :delete -%>
+		</li>
 	<% end -%>
 </ul>

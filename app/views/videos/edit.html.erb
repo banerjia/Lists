@@ -42,10 +42,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<%= f.check_box :active, :checked => true %>
+		<%= f.check_box :active %>
 		<%= f.label :active, "Active" %>
 	</div>
-	<%= f.submit "Save"%>
-	<%= f.submit "Save and Add another" %>
+	<%= f.submit "Update"%>
 	<%= link_to "Cancel", videos_path %>
 <% end -%>

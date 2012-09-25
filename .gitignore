@@ -16,4 +16,5 @@ rerun.txt
 pickle-email-*.html
 Gemfile.lock
 *.tmproj
+.*
 README.rdoc
