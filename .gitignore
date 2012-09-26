@@ -17,4 +17,5 @@ pickle-email-*.html
 Gemfile.lock
 *.tmproj
 .*
+schema.rb
 README.rdoc

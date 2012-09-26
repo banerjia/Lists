@@ -11,11 +11,12 @@ class VideosController < ApplicationController
   end
 
   def create
-    @new_video = Video.new(params[:video])
-    if @new_video.save     
+    new_video = Video.new(params[:video])
+    if new_video.save     
       redirect_to :action => (params[:commit] == "Save" ? "index" : "new")
     else
-      redirect_to :action => "new"
+	  @video = new_video
+      render :action => "new"
     end
   end
   
@@ -33,7 +34,7 @@ class VideosController < ApplicationController
   end
 
   def destroy
-    Video.delete( params[:id] )
-    redirect_to videos_path
+    Video.mark_for_deletion( params[:id] )
+    redirect_to :action => "index"
   end
 end
