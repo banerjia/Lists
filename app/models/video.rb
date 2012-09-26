@@ -1,10 +1,8 @@
 class Video < ActiveRecord::Base
   belongs_to :site, :counter_cache => true
   attr_accessible :description, :image_url, :rating, :tags, :tags, :title, :url, :active
-  validates_uniqueness_of comp_link(), \
-                          :message => "URL already present"
-  validates_presence_of :url, \
-                        :message => "URL is required dummy"
+  validates :url, :presence => {:message => "URL is required dummy"}, \
+                  :uniqueness => {:case_sensitive => false, :message => "URL already present"}
 
   before_save do |video|
     return if video[:url].blank?
@@ -13,10 +11,6 @@ class Video < ActiveRecord::Base
   end
 
   private
-
-  def comp_link 
-	return "cnn.com/videos5"
-  end
 
   def extract_domain( url )
     url_pattern = /\:\/\/.*?\.([a-zA-Z0-9\-\_]+(\.(([a-zA-Z]{2})|gov|com|biz|net|xxx|edu|org|pro|tel|mil|int|([a-zA-Z]{4})))+)\//

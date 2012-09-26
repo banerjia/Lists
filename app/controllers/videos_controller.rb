@@ -12,7 +12,7 @@ class VideosController < ApplicationController
 
   def create
     @new_video = Video.new(params[:video])
-    if @new_video.save      
+    if @new_video.save     
       redirect_to :action => (params[:commit] == "Save" ? "index" : "new")
     else
       redirect_to :action => "new"

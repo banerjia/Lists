@@ -47,5 +47,5 @@
 	</div>
 	<%= f.submit "Save"%>
 	<%= f.submit "Save and Add another" %>
-	<%= link_to "Cancel", videos_path %>
+	<input type="button" value="Cancel" onclick="window.location='<%=videos_path%>'"/>
 <% end -%>
