@@ -28,6 +28,7 @@ class Video < ActiveRecord::Base
     video_to_archive[:url] = self[:url]
     video_to_archive[:unique_url] = self[:unique_url]
     video_to_archive[:site_id] = self[:site_id]
+    video_to_archive[:created_at] = self[:created_at]    
     video_to_archive.save
     super    
   end
