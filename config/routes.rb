@@ -2,6 +2,7 @@ Lists::Application.routes.draw do
   root :to => 'videos#index'
 
   resources :videos
+  resources :videos_archives
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

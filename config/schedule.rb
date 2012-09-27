@@ -23,6 +23,6 @@ every :sunday, :at => "11:59pm" do
 	runner "VideosArchive.purge_old_entries"
 end
 
-every :day, :at => "11:59pm" do
+every :day, :at => "8:02pm" do
 	runner "Video.validate_urls"
 end

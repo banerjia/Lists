@@ -7,11 +7,11 @@ class Video < ActiveRecord::Base
 
   validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
   validates_format_of :url, :with => URI.regexp
-  validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present"
+  validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 
   # Callback Methods
   before_save do |video|
-    return if video[:url].blank?
+    return if !video.url_changed? || video[:url].blank?
     site = Site.find_or_create_by_domain(extract_domain(video[:url]), :title => extract_domain(video[:url]))
     video[:site_id]= site[:id]
   end
@@ -23,27 +23,29 @@ class Video < ActiveRecord::Base
   # Instance Methods
   def destroy
     video_to_archive = VideosArchive.new()
-	self.attributes.each do |key,value|
-		video_to_archive[key] = value unless key == "updated_at" || key == "active"
-	end
+    self.attributes.each do |key,value|
+      video_to_archive[key] = value unless key == "updated_at" || key == "active"
+    end
     video_to_archive.save
     super    
   end
-  
+
   # Class Methods
   def self.validate_urls
-	success_codes = (200..2007).to_a.append(226) + (300..307).to_a
-	entries_to_validate = find(:all, :conditions => ["validated_at <= ? ||  validated_at = NULL", 7.days.ago], :select => [:id, :url, :validated_at, :active] )
-	entries_to_validate.each do |entry|
-		entry[:validated_at] = Time.now
-		url_to_validate = URI.parse( entry[:url] )
-		begin
-			url_response = Net::HTTP.get_response( url_to_validate )
-		rescue
-			entry[:active] = false
-		end
-		entry.save
-	end
+    success_codes = (200..207).to_a.append(226) + (300..307).to_a
+    entries_to_validate = find(:all, :conditions => ["validated_at <= ? ||  validated_at IS NULL", 7.days.ago.to_date], :select => [:id, :url, :validated_at, :active] )
+    entries_to_validate.each do |entry|
+      valid_url = true
+      begin
+        url_response = Net::HTTP.get_response( URI.parse( entry[:url] ) )
+        valid_url = !success_codes.index(url_response.code.to_i).nil?
+      rescue 
+        valid_url = false
+      end
+      entry[:active] = valid_url
+      entry[:validated_at] = Time.now
+      entry.save!(:validate => false)
+    end
   end
 
   # Private Methods
@@ -55,7 +57,7 @@ class Video < ActiveRecord::Base
   end
 
   def extract_unique_url( url )
-    url_pattern = /^http(s){0,1}\:\/\/www\./
+    url_pattern = /^http(s){0,1}\:\/\/(www\.)?/
     url.sub( url_pattern, "")
   end
 end

@@ -10,6 +10,33 @@
 		</li>
 	<% end -%>
 </ul>
+
+<%- if @validation_failed.any? -%>
+<h2>Links are not valid</h2>
+<ul>
+	<% @validation_failed.each do |video| -%>
+		<li>
+			<%= video[:title] -%>
+			<br/>
+			<%= link_to "Edit", edit_video_path( video ) %> | 
+			<%= link_to "Delete", video, :confirm => "Are you sure?", :method => :delete -%>
+		</li>
+	<% end -%>
+</ul>
+<%- end -%>
+<%- if @deleted_videos.any? -%>
+<h2>Deleted Videos</h2>
+<ul>
+	<% @deleted_videos.each do |video| -%>
+		<li>
+			<%= video[:title] -%>
+			<br/>
+			<%= link_to "Undelete", video, :confirm => "Are you sure?", :method => :delete -%>
+		</li>
+	<% end -%>
+</ul>
+<%- end -%>
+
 <%= content_for :javascript do -%>
 	<%= javascript_include_tag :jquery -%>
 	<%= javascript_include_tag :jquery_ujs -%>

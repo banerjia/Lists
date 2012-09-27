@@ -1,7 +1,6 @@
 class VideosDeletedTable < ActiveRecord::Migration
   def up
-    create_table :videos_archives, :id => false, :options => "engine=ARCHIVE" do |t|
-      t.integer :id, :null => false
+    create_table :videos_archives do |t|
       t.string :title, :null => false, :limit => 200
       t.text :description
       t.string :url, :null => false, :limit => 300
