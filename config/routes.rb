@@ -1,5 +1,5 @@
 Lists::Application.routes.draw do
-  #root :to => 'videos#index'
+  root :to => 'videos#index'
 
   resources :videos
   # The priority is based upon order of creation:

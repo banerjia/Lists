@@ -18,4 +18,5 @@ Gemfile.lock
 *.tmproj
 .*
 schema.rb
+database.yml
 README.rdoc

@@ -34,7 +34,7 @@ class VideosController < ApplicationController
   end
 
   def destroy
-    Video.mark_for_deletion( params[:id] )
+    Video.find( params[:id] ).destroy
     redirect_to :action => "index"
   end
 end
