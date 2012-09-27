@@ -1,8 +1,12 @@
 class Video < ActiveRecord::Base
+  require 'uri'
+  require 'net/http'
+
   belongs_to :site, :counter_cache => true
   attr_accessible :description, :image_url, :rating, :tags, :title, :url, :active
 
-  validates_presence_of :url, :message => "URL is required dummy"
+  validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
+  validates_format_of :url, :with => URI.regexp
   validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present"
 
   # Callback Methods
@@ -19,18 +23,27 @@ class Video < ActiveRecord::Base
   # Instance Methods
   def destroy
     video_to_archive = VideosArchive.new()
-    video_to_archive[:id] = self[:id]
-    video_to_archive[:title] = self[:title]
-    video_to_archive[:description] = self[:description]
-    video_to_archive[:image_url] = self[:image_url]
-    video_to_archive[:rating] = self[:rating]
-    video_to_archive[:tags] = self[:tags]
-    video_to_archive[:url] = self[:url]
-    video_to_archive[:unique_url] = self[:unique_url]
-    video_to_archive[:site_id] = self[:site_id]
-    video_to_archive[:created_at] = self[:created_at]    
+	self.attributes.each do |key,value|
+		video_to_archive[key] = value unless key == "updated_at" || key == "active"
+	end
     video_to_archive.save
     super    
+  end
+  
+  # Class Methods
+  def self.validate_urls
+	success_codes = (200..2007).to_a.append(226) + (300..307).to_a
+	entries_to_validate = find(:all, :conditions => ["validated_at <= ? ||  validated_at = NULL", 7.days.ago], :select => [:id, :url, :validated_at, :active] )
+	entries_to_validate.each do |entry|
+		entry[:validated_at] = Time.now
+		url_to_validate = URI.parse( entry[:url] )
+		begin
+			url_response = Net::HTTP.get_response( url_to_validate )
+		rescue
+			entry[:active] = false
+		end
+		entry.save
+	end
   end
 
   # Private Methods

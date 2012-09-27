@@ -37,3 +37,5 @@ gem 'dynamic_form'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'whenever', :require => false
