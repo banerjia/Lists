@@ -6,17 +6,18 @@ class Video < ActiveRecord::Base
   attr_accessible :description, :image_url, :rating, :tags, :title, :url, :active
 
   validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
-  validates_format_of :url, :with => URI.regexp
   validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 
   # Callback Methods
   before_save do |video|
-    return if !video.url_changed? || video[:url].blank?
+    return if !video.url_changed? 
     site = Site.find_or_create_by_domain(extract_domain(video[:url]), :title => extract_domain(video[:url]))
     video[:site_id]= site[:id]
   end
 
   before_validation do |video|
+    return if !video.url_changed? || video[:url].nil?
+    video[:url] = video[:url].strip.sub( /\/$/,'')
     video[:unique_url] = extract_unique_url( video[:url] )
   end
 
@@ -33,7 +34,7 @@ class Video < ActiveRecord::Base
   # Class Methods
   def self.validate_urls
     success_codes = (200..207).to_a.append(226) + (300..307).to_a
-    entries_to_validate = find(:all, :conditions => ["validated_at <= ? ||  validated_at IS NULL", 7.days.ago.to_date], :select => [:id, :url, :validated_at, :active] )
+    entries_to_validate = find(:all, :conditions => ["validated_at >= ? ||  validated_at IS NULL", 6.days.ago.to_date], :select => [:id, :url, :validated_at, :active] )
     entries_to_validate.each do |entry|
       valid_url = true
       begin

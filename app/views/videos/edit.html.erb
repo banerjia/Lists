@@ -1,50 +1,9 @@
 <h2 id="create_a_new_entry">Create A New Entry</h2>
 
 <%= form_for @video do |f| -%>
-	<div class="row">
-		<div class="label">
-			<%= f.label :title, "Title" %>
-		</div>
-		<div class="field">
-			<%= f.text_field :title, :size => nil, :maxlength => 250 %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label">
-			<%= f.label :description, "Description" %>
-		</div>
-		<div class="field">
-			<%= f.text_area :description, :rows => 5, :cols => 120 %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label">
-			<%= f.label :url, "Video URL" %>
-		</div>
-		<div class="field">
-			<%= f.text_field :url, :size => nil, :maxlength => 255 %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label">
-			<%= f.label :image_url, "Image Url" %>	
-		</div>
-		<div class="field">
-			<%= f.text_field :image_url, :size => nil %>
-		</div>
-	</div>
-	<div class="row">
-		<div class="label">
-			<%= f.label :rating, "Rating" %>
-		</div>
-		<div class="field">
-			<%= f.text_field :rating, :size => nil, :class=> "numeric" %>
-		</div>
-	</div>
-	<div class="row">
-		<%= f.check_box :active %>
-		<%= f.label :active, "Active" %>
-	</div>
+<%= render :partial => "video_entry", :locals => {:ff => f}%>
+<div class="form_buttons">
 	<%= f.submit "Update"%>
-	<%= link_to "Cancel", videos_path %>
+	<input type="button" value="Cancel" onclick="window.location='<%=videos_path%>'"/>		
+</div>
 <% end -%>

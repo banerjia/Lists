@@ -1,21 +1,23 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  title: MyString
-  description: MyText
-  url: MyString
-  image_url: MyString
-  tags: MyText
+  id: 1
+  title: CNN > Landing Gear Jammed 
+  description: This is the first video added using fixtures
+  url: http://www.cnn.com/video/?hpt=hp_c2#/video/bestoftv/2012/09/27/dnt-jfk-emergency-landing-gear-jammed.wabc
+  unique_url: cnn.com/video/?hpt=hp_c2#/video/bestoftv/2012/09/27/dnt-jfk-emergency-landing-gear-jammed.wabc
+  image_url: 
+  tags: airplane accident
   rating: 1
-  tags: MyText
-  site: 
+  site: 1
 
 two:
-  title: MyString
-  description: MyText
-  url: MyString
-  image_url: MyString
-  tags: MyText
+  id: 1
+  title: CNN > Marry My Daughter
+  description: Another CNN story
+  url: http://www.cnn.com/video/?hpt=hp_c2#/video/world/2012/09/28/pkg-chiou-hong-kong-marriage-bounty.cnn
+  unique_url: cnn.com/video/?hpt=hp_c2#/video/world/2012/09/28/pkg-chiou-hong-kong-marriage-bounty.cnn
+  image_url: 
+  tags: gossip foreign
   rating: 1
-  tags: MyText
-  site: 
+  site: 1

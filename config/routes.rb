@@ -2,7 +2,7 @@ Lists::Application.routes.draw do
   root :to => 'videos#index'
 
   resources :videos
-  resources :videos_archives
+  resources :videos_archives, :only => :destroy
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

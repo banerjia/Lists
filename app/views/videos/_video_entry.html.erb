@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="label">
+		<%= ff.label :title, "Title" %>
+	</div>
+	<div class="field">
+		<%= ff.text_field :title, :size => nil, :maxlength => 250 %>
+	</div>
+</div>
+<div class="row">
+	<div class="label">
+		<%= ff.label :description, "Description" %>
+	</div>
+	<div class="field">
+		<%= ff.text_area :description, :rows => 5, :cols => 120 %>
+	</div>
+</div>
+<div class="row">
+	<div class="label">
+		<%= ff.label :url, "Video URL" %>
+	</div>
+	<div class="field">
+		<%= ff.text_field :url, :size => 50, :maxlength => 255 %>
+	</div>
+</div>
+<div class="row">
+	<div class="label">
+		<%= ff.label :image_url, "Image Url" %>	
+	</div>
+	<div class="field">
+		<%= ff.text_field :image_url, :size => nil %>
+	</div>
+</div>
+<div class="row">
+	<div class="label">
+		<%= ff.label :rating, "Rating" %>
+	</div>
+	<div class="field">
+		<%= ff.text_field :rating, :size => nil, :class=> "numeric" %>
+	</div>
+</div>
+<div class="row">
+	<%= ff.check_box :active %>
+	<%= ff.label :active, "Active" %>
+</div>

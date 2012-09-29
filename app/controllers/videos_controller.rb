@@ -17,11 +17,11 @@ class VideosController < ApplicationController
     if new_video.save     
       redirect_to :action => (params[:commit] == "Save" ? "index" : "new")
     else
-	  @video = new_video
+      @video = new_video
       render :action => "new"
     end
   end
-  
+
   def edit
     @video = Video.find( params[:id] )
   end
