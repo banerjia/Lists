@@ -5,6 +5,7 @@ class Video < ActiveRecord::Base
   belongs_to :site, :counter_cache => true
   attr_accessible :description, :image_url, :rating, :tags, :title, :url, :active
 
+  validates :title, :presence => "The entry needs a title."
   validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
   validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 

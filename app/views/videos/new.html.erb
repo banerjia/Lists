@@ -1,5 +1,12 @@
 <h2 id="create_a_new_entry">Create A New Entry</h2>
-
+<%- if @video.errors.any? -%>
+	<p class="error">There were a few problems with this entry.</p>
+	<ul>
+		<%- @video.errors.full_messages.each do |error| -%>
+		<li><%= error -%></li>
+		<%- end -%>
+	</ul>
+<%- end -%>
 <%= form_for @video do |f| -%>
 <%= render :partial => "video_entry", :locals => {:ff => f}%>
 <div class="form_buttons">
@@ -8,3 +15,6 @@
 	<input type="button" value="Cancel" onclick="window.location='<%=videos_path%>'"/>		
 </div>
 <% end -%>
+<%= content_for :head do -%>
+	<%= stylesheet_link_tag :form_error, :media => 'screen' -%>
+<%- end -%>
