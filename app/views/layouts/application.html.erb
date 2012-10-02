@@ -7,16 +7,26 @@
   <%= yield :head -%>
 </head>
 <body>
-	<%- if !@page_title.nil? -%>
-	<h1><%= @page_title -%></h1>
-	<%- end -%>
-	<%- if !flash[:notice].nil? -%>
-	<p class="notice"><%= flash[:notice] -%></p>
-	<%- end -%>
-	<%- if !flash[:warning].nil? -%>
-	<p class="warning"><%= flash[:warning] -%></p>
-	<%- end -%>
-	<%= yield :body -%>
+	<div id="wrapper">
+		<%- if !@page_title.nil? -%>
+		<header>
+			<h1><%= @page_title -%></h1>
+		</header>
+		<%- end -%>
+		<%- if !flash[:notice].nil? || !flash[:warning].nil? -%>
+		<div id="notifications">
+			<%- if !flash[:notice].nil? -%>
+			<p class="notice"><%= flash[:notice] -%></p>
+			<%- end -%>
+			<%- if !flash[:warning].nil? -%>
+			<p class="warning"><%= flash[:warning] -%></p>
+			<%- end -%>
+		</div>
+		<%- end -%>
+		<div id="body">
+		<%= yield :body -%>
+		</div>
+	</div>
 	<%= yield :javascript -%>
 </body>
 </html>
