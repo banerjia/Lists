@@ -38,4 +38,4 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-gem 'whenever', :require => false
+#gem 'whenever', :require => false
