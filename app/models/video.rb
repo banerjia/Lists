@@ -51,11 +51,11 @@ class Video < ActiveRecord::Base
   end
 
   # Private Methods
-  private
+  private 
 
   def extract_domain( url )
-    url_pattern = /\:\/\/.*?\.([a-zA-Z0-9\-\_]+(\.(([a-zA-Z]{2})|gov|com|biz|net|xxx|edu|org|pro|tel|mil|int|([a-zA-Z]{4})))+)\//
-    url_pattern.match(url)[1]
+    url_pattern = /\:\/\/(.*\.)?([a-zA-Z0-9\-\_]+(\.(([a-zA-Z]{2})|gov|com|biz|net|xxx|edu|org|pro|tel|mil|int|([a-zA-Z]{4})))+)\//
+    url_pattern.match(url)[2]
   end
 
   def extract_unique_url( url )

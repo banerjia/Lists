@@ -1,7 +1,6 @@
 class VideosController < ApplicationController
   def index
     @page_title = "Rich Media"
-    @browser_title = "Diplomacy"
     @recently_added = Video.find(:all, :conditions => ["active = ? and created_at >= ?", 1, 7.days.ago.to_date], :limit => "0,5", :order => "created_at desc")
     @top_videos = Video.find(:all, :conditions => ["active = ? and rating >= ? ", 1, 5 ], :limit => 5, :order => "rating desc")
     @validation_failed = Video.find(:all, :conditions => ["validated_at = updated_at and active=0"], :order => "validated_at desc")
