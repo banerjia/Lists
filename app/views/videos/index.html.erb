@@ -36,6 +36,18 @@
 	<% end -%>
 </ul>
 <%- end -%>
+<%- if @inactive_videos.any? -%>
+<h2>Inactive Videos</h2>
+<ul>
+	<% @inactive_videos.each do |video| -%>
+		<li>
+			<%= video[:title] -%>
+			<br/>
+			<%= link_to "Edit", edit_video_path(video) -%>
+		</li>
+	<% end -%>
+</ul>
+<%- end -%>
 
 <%= content_for :javascript do -%>
 	<%= javascript_include_tag :jquery -%>

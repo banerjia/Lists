@@ -5,6 +5,7 @@ class VideosController < ApplicationController
     @top_videos = Video.find(:all, :conditions => ["active = ? and rating >= ? ", 1, 5 ], :limit => 5, :order => "rating desc")
     @validation_failed = Video.find(:all, :conditions => ["validated_at = updated_at and active=0"], :order => "validated_at desc")
     @deleted_videos = VideosArchive.find(:all, :order => "updated_at desc")
+    @inactive_videos = Video.where({:active => false}).order("updated_at desc")
   end
 
   def new
