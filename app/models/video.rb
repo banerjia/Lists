@@ -17,7 +17,14 @@ class Video < ActiveRecord::Base
   end
 
   before_validation do |video|
-    return if !video.url_changed? || video[:url].nil?
+    return if (!video.url_changed? || video[:url].nil?) && !video[:title].empty?
+    if video[:title].empty?
+      doc = Net::HTTP.get( URI( video[:url] ) )
+      domain = extract_domain(video[:url])
+      video[:title] = extract_content( doc, domain, "title_pattern")
+      video[:description] = extract_content( doc, domain, "description_pattern") if video[:description].empty?
+      video[:image_url] = extract_content( doc, domain, "image_pattern") if video[:image_url].empty?
+    end
     video[:url] = video[:url].strip.sub( /\/$/,'')
     video[:unique_url] = extract_unique_url( video[:url] )
   end
@@ -49,15 +56,24 @@ class Video < ActiveRecord::Base
       entry.save!(:validate => false)
     end
   end
-
+ 
   # Private Methods
-  private 
+  private
 
   def extract_domain( url )
     url_pattern = /\:\/\/(.*\.)?([a-zA-Z0-9\-\_]+(\.(([a-zA-Z]{2})|gov|com|biz|net|xxx|edu|org|pro|tel|mil|int|([a-zA-Z]{4})))+)\//
     url_pattern.match(url)[2]
   end
 
+  
+  def extract_content( response, domain, attribute )
+    attr_sym = attribute.to_sym
+    pattern = Site.find( :first, :conditions => {:domain => domain}, :select => attr_sym )
+    return nil if pattern.nil? || pattern[attr_sym].nil?
+    matches = response.match( Regexp.new( pattern[attr_sym] ) )
+    matches[1].strip unless matches.nil?    
+  end
+  
   def extract_unique_url( url )
     url_pattern = /^http(s){0,1}\:\/\/(www\.)?/
     url.sub( url_pattern, "")
