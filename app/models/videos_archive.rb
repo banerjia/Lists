@@ -15,6 +15,6 @@ class VideosArchive < ActiveRecord::Base
 
   # Class Methods
   def self.purge_old_entries
-    delete_all( :conditions => ["updated_at <= ?", 1.day.ago.to_date] )
+    delete_all( ["updated_at <= ?", 7.day.ago.to_date] )
   end
 end
