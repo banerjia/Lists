@@ -9,7 +9,7 @@ class VideosController < ApplicationController
   end
 
   def new
-    @video = Video.new
+    @video = Video.new( {:active => true })
   end
 
   def create
