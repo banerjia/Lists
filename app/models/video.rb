@@ -9,14 +9,6 @@ class Video < ActiveRecord::Base
   validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
   validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 
-  tire do 
-    index_name('videos')
-    mapping do
-      indexes :title, :analyzer => 'snowball', :type => 'string'
-      indexes :description, :analyzer => 'snowball', :type => 'string'
-    end
-  end
-
   # Callback Methods
   before_save do |video|
     return if !video.url_changed? 
