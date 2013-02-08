@@ -15,6 +15,7 @@ class VideosController < ApplicationController
   def create
     new_video = Video.new(params[:video])
     if new_video.save     
+      flash[:notice] = "Video <em>#{new_video[:title]}</em> has been saved"
       redirect_to :action => (params[:commit] == "Save" ? "index" : "new")
     else
       @video = new_video
