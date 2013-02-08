@@ -16,10 +16,10 @@
 		<%- if !flash[:notice].nil? || !flash[:warning].nil? -%>
 		<div id="notifications">
 			<%- if !flash[:notice].nil? -%>
-			<p class="notice"><%= flash[:notice] -%></p>
+			<p class="notice"><%= raw(flash[:notice]) -%></p>
 			<%- end -%>
 			<%- if !flash[:warning].nil? -%>
-			<p class="warning"><%= flash[:warning] -%></p>
+			<p class="warning"><%= raw(flash[:warning]) -%></p>
 			<%- end -%>
 		</div>
 		<%- end -%>
