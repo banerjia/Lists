@@ -1,5 +1,10 @@
 @mixin message_paras
+	background:
+		position: 5px center
+		repeat: no-repeat
 	padding: 0.3em 0.5em
+	padding-left: 35px
+	min-height: 25px
 
 body
 	font:
@@ -68,4 +73,5 @@ p
 		@include message_paras
 		background:
 			color: #E8F1D4
+			image: url( <%= image_path( 'saved_simple.png' ) %> )
 		border: 1px solid #A2C257
