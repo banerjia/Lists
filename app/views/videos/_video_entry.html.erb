@@ -3,7 +3,7 @@
 		<%= ff.label :title, "Title" %>
 	</div>
 	<div class="field">
-		<%= ff.text_field :title, :size => nil, :maxlength => 250 %>
+		<%= ff.text_field :title, :size => 50, :maxlength => 250 %>
 	</div>
 </div>
 <div class="row">
@@ -42,3 +42,7 @@
 	<%= ff.check_box :active %>
 	<%= ff.label :active, "Active" %>
 </div>
+
+<% content_for :head do -%>
+	<%= stylesheet_link_tag :form -%>
+<% end -%>

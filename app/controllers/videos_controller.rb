@@ -20,6 +20,7 @@ class VideosController < ApplicationController
 			redirect_to :action => (params[:commit] == "Save" ? "index" : "new")
 		else
 			@video = new_video
+			@page_title = "Add a New Video"
 			render :action => "new"
 		end
 	end

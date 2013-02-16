@@ -1,3 +1,6 @@
+@mixin message_paras
+	padding: 0.3em 0.5em
+
 body
 	font:
 		family:  "Trebuchet MS", Helvetica, sans-serif
@@ -32,30 +35,37 @@ div
 		width: 1024px
 		
 		
-		& header
+		header
 			background:
-				color: #8B4500
+				color: #FAFAD2
 			border: none
 			display: block
 			margin:
 				top: 0
 				left: -0.5em
 				right: -0.5em
+			padding-top: 0
 
 			h1
-				color: #FFFFFF
+				color: #734A12
 				line-height: 2.2
+				margin-top: 0
+				padding:
+					left: 0.3em
+					right: 0.3em
 	
 	&#body
 		display: block
 
 p
 	&.warning
+		@include message_paras
 		background:
 			color: #FFCCCC
 		border: 1px solid #D44942
 	
 	&.notice
+		@include message_paras
 		background:
 			color: #E8F1D4
 		border: 1px solid #A2C257
