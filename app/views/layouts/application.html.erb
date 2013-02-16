@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= @browser_title.nil? && @page_title.nil? ? "Lists": @browser_title || @page_title -%></title>
-  <%= stylesheet_link_tag    "application", :media => "all" -%>
-  <%= csrf_meta_tags -%>
-  <%= yield :head -%>
+	<title><%= @browser_title.nil? && @page_title.nil? ? "Lists": @browser_title || @page_title -%></title>
+	<%= stylesheet_link_tag		 "application", :media => "all" -%>
+	<%= csrf_meta_tags -%>
+	<%= yield :head -%>
 </head>
 <body>
 	<div id="wrapper">
