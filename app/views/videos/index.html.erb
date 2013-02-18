@@ -1,55 +1,59 @@
-<%= link_to "New Entry", new_video_path -%>
-<h2>Recently Added</h2>
-<ul>
-	<% @recently_added.each do |video| -%>
-		<li>
+<%- content_for :body do -%>
+	<%= link_to "New Entry", new_video_path, :class => 'button' -%>
+	<h2>Recently Added</h2>
+	<ul>
+		<% @recently_added.each do |video| -%>
+			<li>
 			<%= video[:title] -%>
 			<br/>
 			<%= link_to "Edit", edit_video_path( video ) %> | 
 			<%= link_to "Delete", video, :confirm => "Are you sure?", :method => :delete -%>
-		</li>
-	<% end -%>
-</ul>
+			</li>
+		<% end -%>
+	</ul>
 
-<%- if @validation_failed.any? -%>
-<h2>Links are not valid</h2>
-<ul>
-	<% @validation_failed.each do |video| -%>
-		<li>
-			<%= video[:title] -%>
-			<br/>
-			<%= link_to "Edit", edit_video_path( video ) %> | 
-			<%= link_to "Delete", video, :confirm => "Are you sure?", :method => :delete -%>
-		</li>
-	<% end -%>
-</ul>
+	<%- if @validation_failed.any? -%>
+		<h2>Links are not valid</h2>
+		<ul>
+			<% @validation_failed.each do |video| -%>
+				<li>
+				<%= video[:title] -%>
+				<br/>
+				<%= link_to "Edit", edit_video_path( video ) %> | 
+				<%= link_to "Delete", video, :confirm => "Are you sure?", :method => :delete -%>
+				</li>
+			<% end -%>
+		</ul>
+	<%- end -%>
+	<%- if @deleted_videos.any? -%>
+		<h2>Deleted Videos</h2>
+		<ul>
+			<% @deleted_videos.each do |video| -%>
+				<li>
+				<%= video[:title] -%>
+				<br/>
+				<%= link_to "Undelete", video, :confirm => "Are you sure?", :method => :delete -%>
+				</li>
+			<% end -%>
+		</ul>
+	<%- end -%>
+	<%- if @inactive_videos.any? -%>
+		<h2>Inactive Videos</h2>
+		<ul>
+			<% @inactive_videos.each do |video| -%>
+				<li>
+				<%= video[:title] -%>
+				<br/>
+				<%= link_to "Edit", edit_video_path(video) -%>
+				</li>
+			<% end -%>
+		</ul>
+	<%- end -%>
 <%- end -%>
-<%- if @deleted_videos.any? -%>
-<h2>Deleted Videos</h2>
-<ul>
-	<% @deleted_videos.each do |video| -%>
-		<li>
-			<%= video[:title] -%>
-			<br/>
-			<%= link_to "Undelete", video, :confirm => "Are you sure?", :method => :delete -%>
-		</li>
-	<% end -%>
-</ul>
+<%- content_for :left_column do -%>
+	Something
 <%- end -%>
-<%- if @inactive_videos.any? -%>
-<h2>Inactive Videos</h2>
-<ul>
-	<% @inactive_videos.each do |video| -%>
-		<li>
-			<%= video[:title] -%>
-			<br/>
-			<%= link_to "Edit", edit_video_path(video) -%>
-		</li>
-	<% end -%>
-</ul>
-<%- end -%>
-
 <%= content_for :javascript do -%>
-	<%= javascript_include_tag :jquery -%>
 	<%= javascript_include_tag :jquery_ujs -%>
 <%- end -%>
+<%= render :template => 'layouts/two_column_layout' -%>

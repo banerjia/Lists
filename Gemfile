@@ -23,6 +23,8 @@ end
 gem 'jquery-rails'
 gem 'json', '~> 1.7.7'
 gem 'bourbon'
+gem 'tire'
+
 #gem 'dynamic_form'
 
 # To use ActiveModel has_secure_password

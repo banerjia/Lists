@@ -1,77 +1,119 @@
+@import "bourbon"
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700)
+@import url(http://fonts.googleapis.com/css?family=Cabin)
+
+@mixin fonts
+  font:
+    family:  'Open Sans', Helvetica, sans-serif
+    size: 11pt
+
+
 @mixin message_paras
-	background:
-		position: 5px center
-		repeat: no-repeat
-	padding: 0.3em 0.5em
-	padding-left: 35px
-	min-height: 25px
+  background:
+    position: 5px center
+    repeat: no-repeat
+  padding: 0.3em 0.5em
+  padding-left: 35px
+  min-height: 25px
 
 body
-	font:
-		family:  "Trebuchet MS", Helvetica, sans-serif
-		size: 10pt
-	margin: 0
-	padding:
-		top: 0
-	text:
-		align: center
-	
-	width: auto
+  @include fonts
+  margin: 0
+  padding:
+    top: 0
+  text:
+    align: center
+  width: auto
+
+#{$all-text-inputs}, textarea, select
+  font:
+    family: 'Cabin'
+    size: inherit
+  padding: 0.3em
 
 html 
-	@extend body
-		
-div
-	position: relative
-	
-	&#wrapper
-		border: 2px solid #DDD
-			left:
-				width: 4px
-			right:
-				width: 4px	
-		display: block
-		height: 100%
-		padding: 0.5em
-			top: 0
-		margin: 0 auto
-		text:
-			align: left
-		width: 1024px
-		
-		
-		header
-			background:
-				color: #FAFAD2
-			border: none
-			display: block
-			margin:
-				top: 0
-				left: -0.5em
-				right: -0.5em
-			padding-top: 0
+  @extend body
 
-			h1
-				color: #734A12
-				line-height: 2.2
-				margin-top: 0
-				padding:
-					left: 0.3em
-					right: 0.3em
-	
-	&#body
-		display: block
+div
+  position: relative
+
+  &#wrapper
+    border: 2px solid #DDD
+      left:
+        width: 4px
+      right:
+        width: 4px	
+    display: block
+    height: 100%
+    padding: 0.5em
+      top: 0
+    margin: 0 auto
+    text:
+      align: left
+    width: 1024px
+
+
+    header
+      @include background-image( linear-gradient( #CD2626, #330000) )
+      border: none
+      display: block
+      margin:
+        top: 0
+        left: -0.5em
+        right: -0.5em
+      padding-top: 0
+
+      h1
+        color: #FFF
+        line-height: 2.2
+        margin-top: 0
+        padding:
+          left: 0.3em
+          right: 0.3em
+
+  &#body
+    display: block
+
+    div
+      position: relative
+
+      &#left_column
+        margin:
+          left: 0
+          right: 70%
+        width: 250px
+      &#right_column
+        border:
+          left: 2px solid #CCC
+        float: right
+        margin:
+          left: 255px
+          right: 0
+        padding: 
+          left: 0.5em
+          right: 0.5em
+        width: auto
+
 
 p
-	&.warning
-		@include message_paras
-		background:
-			color: #FFCCCC
-		border: 1px solid #D44942
-	
-	&.notice
-		@include message_paras
-		background:
-			color: #E8F1D4
-			image: url( <%= image_path( 'saved_simple.png' ) %> )
-		border: 1px solid #A2C257
+  &.warning
+    @include message_paras
+    background:
+      color: #FFCCCC
+    border: 1px solid #D44942
+
+  &.notice
+    @include message_paras
+    background:
+      color: #E8F1D4
+      image: url( <%= image_path( 'saved_simple.png' ) %> )
+    border: 1px solid #A2C257
+
+button, a.button
+  @include button(simple, #8B3626)
+  font-size: inherit
+
+input[type=submit], input[type=button]
+  @include button(simple, #A2C257)
+  font-size: inherit
+

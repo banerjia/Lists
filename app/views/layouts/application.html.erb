@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title><%= @browser_title.nil? && @page_title.nil? ? "Lists": @browser_title || @page_title -%></title>
-	<%= stylesheet_link_tag		 "application", :media => "all" -%>
-	<%= csrf_meta_tags -%>
-	<%= yield :head -%>
-</head>
-<body>
-	<div id="wrapper">
-		<%- if !@page_title.nil? -%>
-		<header>
-			<h1><%= @page_title -%></h1>
-		</header>
-		<%- end -%>
-		<%- if !flash[:notice].nil? || !flash[:warning].nil? -%>
-		<div id="notifications">
-			<%- if !flash[:notice].nil? -%>
-			<p class="notice"><%= raw(flash[:notice]) -%></p>
+	<head>
+		<title><%= @browser_title.nil? && @page_title.nil? ? "Lists": @browser_title || @page_title -%></title>
+		<%= stylesheet_link_tag		 "application", :media => "all" -%>
+		<%= csrf_meta_tags -%>
+		<%= yield :head -%>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%- if !@page_title.nil? -%>
+				<header>
+				<h1><%= @page_title -%></h1>
+				</header>
 			<%- end -%>
-			<%- if !flash[:warning].nil? -%>
-			<p class="warning"><%= raw(flash[:warning]) -%></p>
+			<%- if !flash[:notice].nil? || !flash[:warning].nil? -%>
+				<div id="notifications">
+					<%- if !flash[:notice].nil? -%>
+						<p class="notice"><%= raw(flash[:notice]) -%></p>
+					<%- end -%>
+					<%- if !flash[:warning].nil? -%>
+						<p class="warning"><%= raw(flash[:warning]) -%></p>
+					<%- end -%>
+				</div>
 			<%- end -%>
+			<div id="body">
+				<%= yield -%>
+			</div>
 		</div>
-		<%- end -%>
-		<div id="body">
-		<%= yield :body -%>
-		</div>
-	</div>
-	<%= yield :javascript -%>
-</body>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript">	
+			$(document).ready(function(){			
+					var min_height = Math.max( $("div#right_column").height(), $("div#left_column").height());
+					$("div#right_column, div#left_column").css("min-height", min_height+"px");
+					});
+		</script>
+
+		<%= yield :javascript -%>
+	</body>
 </html>

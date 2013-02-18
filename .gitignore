@@ -19,4 +19,6 @@ Gemfile.lock
 .*
 schema.rb
 database.yml
+*~
+Thumbs.db
 README.rdoc
