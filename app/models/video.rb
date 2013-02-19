@@ -17,6 +17,7 @@ class Video < ActiveRecord::Base
 			indexes :id,				:type => 'integer',			:index => 'not_analyzed'
 			indexes :site_id,		:type => 'integer',			:index => 'not_analyzed'
 			indexes :site_name,	:type => 'string', 			:index => 'not_analyzed',	:as => 'site[:title]',	:incude_in_all => false
+			indexes :rating,		:type => 'integer',			:index => 'not_analyzed'
 			indexes :title,			:type => 'string',			:analyzer => 'snowball'
 			indexes :created_at,:type => 'date',				:index => 'not_analyzed'
 		end
