@@ -71,6 +71,33 @@ class Video < ActiveRecord::Base
 			entry.save!(:validate => false)
 		end
 	end
+	
+	def self.search( params = {} )
+		params[:page] ||= 1
+		params[:per_page] ||= 10
+		query = params[:q].present? && !params[:q].blank? ? params[:q] : '*'
+		results = tire.search :per_page => params[:per_page] , :page => params[:page] do
+			query do
+				boolean do
+					must {string query}
+				end
+			end
+			
+		end
+		
+		return_value = nil
+		
+		if results.total > 0
+			return_value = Hash.new
+			return_value[:results] = results.results
+			return_value[:count] = results.total
+			return_value[:more_pages] = params[:page] < results.total_pages
+			return_value[:q] = params[:q]
+		end
+		
+		return return_value
+		
+	end
 
 	# Private Methods
 	private
