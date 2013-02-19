@@ -12,7 +12,6 @@ class Video < ActiveRecord::Base
 	validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 
 	tire do 
-		index_name('videos')
 		mapping do 
 			indexes :id,				:type => 'integer',			:index => 'not_analyzed'
 			indexes :site_id,		:type => 'integer',			:index => 'not_analyzed'
