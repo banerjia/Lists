@@ -3,11 +3,13 @@ class VideosController < ApplicationController
 	def index
 		@page_title = "Entries"
 		if !params[:q].present?
-			@recently_added = Video.find(:all, :conditions => ["active = ? and created_at >= ?", 1, 7.years.ago.to_date], :limit => 20, :order => "created_at desc")
-			@top_videos = Video.find(:all, :conditions => ["active = ? and rating >= ? ", 1, 5 ], :limit => 20, :order => "rating desc")
-			@validation_failed = Video.find(:all, :conditions => ["validated_at = updated_at and active=0"], :order => "validated_at desc")
-			@deleted_videos = VideosArchive.find(:all, :order => "updated_at desc")
-			@inactive_videos = Video.where({:active => false}).order("updated_at desc")
+			@recently_added = Video.where( {active: true, created_at: 7.years.ago..DateTime.now}).limit(20).order(:created_at)
+			
+			@top_videos = Video.where( {active: true, rating: [1..5]}).limit(20).order(rating: :desc)
+			
+			@validation_failed = Video.where( "validated_at = updated_at and active=0" ).order(validated_at: :desc)
+			@deleted_videos = VideosArchive.all.order(updated_at: :desc)
+			@inactive_videos = Video.where({:active => false}).order(updated_at: :desc)
 		else
 			@search_results = Video.search( params )
 		end		
@@ -48,4 +50,9 @@ class VideosController < ApplicationController
 		Video.find( params[:id] ).destroy
 		redirect_to :action => "index"
 	end
+
+private
+	def store_params
+		params.require(:video).permit(:title, :description, :url, :image_url, :rating)
+	end	
 end
