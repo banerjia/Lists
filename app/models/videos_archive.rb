@@ -1,6 +1,5 @@
 class VideosArchive < ActiveRecord::Base  
   belongs_to :site
-  attr_accessible :description, :image_url, :rating, :tags, :title, :url 
 
   # Instance Methods
   def destroy

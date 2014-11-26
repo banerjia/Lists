@@ -1,27 +1,24 @@
 class Video < ActiveRecord::Base
 	require 'uri'
 	require 'net/http'
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-
-	belongs_to :site, :counter_cache => true
-	attr_accessible :description, :image_url, :rating, :tags, :title, :url, :active
+ 
+#	belongs_to :site, :counter_cache => true
 
 	validates :title, :presence => "The entry needs a title."
 	validates :url, :presence => {:message => 'Need a URL dummy'}, :format => {:with => URI.regexp, :message => 'Check the format idiot' }
 	validates_uniqueness_of :unique_url, :case_sensitive => false, :message => "URL already present", :if => Proc.new { |video| video.url_changed? }
 
-	tire do 
-		index_name( "videos" )
-		mapping do 
-			indexes :id,				:type => 'integer',			:index => 'not_analyzed'
-			indexes :site_id,		:type => 'integer',			:index => 'not_analyzed'
-			indexes :site_name,	:type => 'string', 			:index => 'not_analyzed',	:as => 'site[:title]',	:incude_in_all => false
-			indexes :rating,		:type => 'integer',			:index => 'not_analyzed'
-			indexes :title,			:type => 'string',			:analyzer => 'snowball'
-			indexes :created_at,:type => 'date',				:index => 'not_analyzed'
-		end
-	end
+#	tire do 
+#		index_name( "videos" )
+#		mapping do 
+#			indexes :id,				:type => 'integer',			:index => 'not_analyzed'
+#			indexes :site_id,		:type => 'integer',			:index => 'not_analyzed'
+#			indexes :site_name,	:type => 'string', 			:index => 'not_analyzed',	:as => 'site[:title]',	:incude_in_all => false
+#			indexes :rating,		:type => 'integer',			:index => 'not_analyzed'
+#			indexes :title,			:type => 'string',			:analyzer => 'snowball'
+#			indexes :created_at,:type => 'date',				:index => 'not_analyzed'
+#		end
+#	end
 
 
 	# Callback Methods
